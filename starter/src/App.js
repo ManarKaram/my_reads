@@ -1,26 +1,24 @@
 import "./App.css";
-import { useState } from "react";
 import  React  from "react";
 
-class App extends React.Component() {
+class MyReadsApp extends React.Component {
   state = {
     showSearchPage: false,
     books: [],
     setShowSearchpage: false
   };
-  // const [showSearchPage, setShowSearchpage] = useState(false);
-  Render() {
+  render() {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
           <div className="search-books">
             <div className="search-books-bar">
-              <a
+              <button
                 className="close-search"
-                onClick={() => this.state.setShowSearchpage(!this.state.showSearchPage)}
+                onClick={() => this.setState({ showSearchPage: false })}
               >
                 Close
-              </a>
+              </button>
               <div className="search-books-input-wrapper">
                 <input
                   type="text"
@@ -281,9 +279,9 @@ class App extends React.Component() {
               </div>
             </div>
             <div className="open-search">
-              <a onClick={() => this.state.setShowSearchpage(!this.state.showSearchPage)}>
+              <button onClick={() => this.setState({ showSearchPage: true })}>
                 Add a book
-              </a>
+              </button>
             </div>
           </div>
         )}
@@ -292,4 +290,4 @@ class App extends React.Component() {
   }
 }
 
-export default App;
+export default MyReadsApp;
