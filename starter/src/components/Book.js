@@ -1,8 +1,8 @@
 import React from "react";
 
-const Book = ({book, changeBookType}) => {
+const Book = ({ book, changeBookType }) => {
   const bookDetails = book;
- 
+
   return (
     <div className="book">
       <div className="book-top">
@@ -11,12 +11,14 @@ const Book = ({book, changeBookType}) => {
           style={{
             width: 128,
             height: 193,
-            backgroundImage:
-              `url(${bookDetails.url})`
+            backgroundImage: `url(${bookDetails.imageLinks.thumbnail})`
           }}
         ></div>
         <div className="book-shelf-changer">
-          <select defaultValue={bookDetails.shelf} onChange={(e) => changeBookType(bookDetails, e.target.value) }>
+          <select
+            defaultValue={bookDetails.shelf}
+            onChange={e => changeBookType(bookDetails, e.target.value)}
+          >
             <option value="none" disabled>
               Move to...
             </option>
@@ -28,7 +30,7 @@ const Book = ({book, changeBookType}) => {
         </div>
       </div>
       <div className="book-title">{bookDetails.title}</div>
-      <div className="book-authors">{bookDetails.author}</div>
+      <div className="book-authors">{bookDetails.authors.join(',')}</div>
     </div>
   );
 };
