@@ -1,16 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import Shelf from "./Shelf";
 
-const Shelves = () => {
+const Shelves = ({books}) => {
   // state of shelves
-  const currentlyReading = [];
-  const whatToRead = [];
-  const read = [];
+  const currentlyReading = books.filter(book=>book.type === 'currentlyReading');
+  const wantToRead = books.filter(book=>book.type === 'wantToRead');;
+  const read = books.filter(book=>book.type === 'read');;
 
   return (
     <>
-      <Shelf />
-      <Shelf />
+      <Shelf books={currentlyReading}/>
+      <Shelf books={wantToRead}/>
+      <Shelf books={read}/>
     </>
   );
 };

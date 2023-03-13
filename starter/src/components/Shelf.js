@@ -1,21 +1,26 @@
-import React, { Component } from "react";
+import React from "react";
 import Book from "./Book";
 
-const Shelf = () => {
+const Shelf = ({ books }) => {
+  const shelfBooks = books;
   return (
-    <div className="bookshelf">
-      <h2 className="bookshelf-title">Currently Reading</h2>
-      <div className="bookshelf-books">
-        <ol className="books-grid">
-         <li>
-           <Book />
-         </li>
-         <li>
-           <Book />
-         </li>
-        </ol>
-      </div>
-    </div>
+    <>
+   
+        <div className="bookshelf">
+          <h2 className="bookshelf-title">Manar</h2>
+          <div className="bookshelf-books">
+            <ol className="books-grid">
+            {shelfBooks.map(book => ( 
+              <li key={book.key}>
+              <Book book={book}/>
+            </li>
+            ))}
+              
+            </ol>
+          </div>
+        </div>
+      
+    </>
   );
 };
 

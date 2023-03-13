@@ -5,7 +5,29 @@ import Shelves from "./components/Shelves";
 class MyReadsApp extends React.Component {
   state = {
     showSearchPage: false,
-    books: [],
+    books: [
+      {
+        url: "http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api",
+        title: "To Kill a Mockingbird",
+        author: "Harper Lee",
+        type: "currentlyReading",
+        key: "book1"
+      },
+      {
+        url: "http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api",
+        title: "To Kill a Mockingbird",
+        author: "Harper Lee",
+        type: "currentlyReading",
+        key: "book2"
+      },
+      {
+        url: "http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api",
+        title: "To Kill a Mockingbird",
+        author: "Harper Lee",
+        type: "currentlyReading",
+        key: "book3"
+      }
+    ],
     setShowSearchpage: false
   };
   render() {
@@ -37,7 +59,7 @@ class MyReadsApp extends React.Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              <Shelves />
+              <Shelves books={this.state.books}/>
             </div>
             <div className="open-search">
               <button onClick={() => this.setState({ showSearchPage: true })}>
