@@ -1,7 +1,8 @@
 import React from "react";
 
-const Book = ({book}) => {
+const Book = ({book, changeBookType}) => {
   const bookDetails = book;
+ 
   return (
     <div className="book">
       <div className="book-top">
@@ -15,7 +16,7 @@ const Book = ({book}) => {
           }}
         ></div>
         <div className="book-shelf-changer">
-          <select>
+          <select defaultValue={bookDetails.shelf} onChange={(e) => changeBookType(bookDetails, e.target.value) }>
             <option value="none" disabled>
               Move to...
             </option>

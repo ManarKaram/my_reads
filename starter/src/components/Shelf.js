@@ -1,25 +1,22 @@
 import React from "react";
 import Book from "./Book";
 
-const Shelf = ({ books }) => {
+const Shelf = ({ title, books, updateBookShelf }) => {
   const shelfBooks = books;
   return (
     <>
-   
-        <div className="bookshelf">
-          <h2 className="bookshelf-title">Manar</h2>
-          <div className="bookshelf-books">
-            <ol className="books-grid">
-            {shelfBooks.map(book => ( 
-              <li key={book.key}>
-              <Book book={book}/>
-            </li>
+      <div className="bookshelf">
+        <h2 className="bookshelf-title">{title}</h2>
+        <div className="bookshelf-books">
+          <ol className="books-grid">
+            {shelfBooks.map(book => (
+              <li key={book.id}>
+                <Book book={book} changeBookType={updateBookShelf} />
+              </li>
             ))}
-              
-            </ol>
-          </div>
+          </ol>
         </div>
-      
+      </div>
     </>
   );
 };
