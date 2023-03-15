@@ -24,7 +24,7 @@ const App = () => {
       return book;
     });
     setBooks(updatedBooks);
-    BooksAPI.update(bookToUpdate, newShelf).then(data => {});
+    BooksAPI.update(bookToUpdate, newShelf);
   };
 
    const handleShowSearchPage=()=>{
@@ -59,7 +59,7 @@ const App = () => {
           <div className="search-books-bar">
             <button
               className="close-search"
-              onClick={handleShowSearchPage}
+              onClick={() => {setShowSearchpage(!showSearchPage); window.location.reload()}}
             >
               Close
             </button>
