@@ -8,13 +8,23 @@ const App = () => {
   // search
   const [showSearchPage, setShowSearchpage] = useState(false);
 
+  // original books
   const [books, setBooks] = useState([]);
 
+  // search data of Input
   const [searchValue, setSearchValue] = useState("");
 
+  // search books
   const [searchBooks, setSearchBooks] = useState([]);
 
+  // combined books after searching
+  const [combinedBooks, setCombinedBooks] = useState<any>([]);
 
+  // map of Id books to differ them from original ones
+  const [mapOfIdsBooks, setMapOfIdsBooks] = useState(new Map<any,any>());
+
+
+  // updateing book shelf method
   const updateBookShelf = (bookToUpdate: any, newShelf:any) => {
     const updatedBooks: any = books.map((book : any) => {
       if (book.id === bookToUpdate.id) {
@@ -27,16 +37,33 @@ const App = () => {
     BooksAPI.update(bookToUpdate, newShelf);
   };
 
-   const handleShowSearchPage=()=>{
-     setShowSearchpage(!showSearchPage)
+  // views search component
+   const handleShowSearchPage = () => {
+     setShowSearchpage(!showSearchPage);
+   };
+
+
+   // creates map of ids of books
+   const createMapOfIdsdata = (data:any): any => {
+    const map = new Map();
+    data.map((book:any, index:any) => {
+      map.set(book.id, book);
+    });
+    return map;
    }
 
-    useEffect(() => {
-      BooksAPI.getAll().then((data:any) => setBooks(data));
-    }, []);
+  // gets all books 
+  useEffect(() => {
+    BooksAPI.getAll().then((data:any) => {
+      setBooks(data);
+      // construct mapOfIds of books
+      setMapOfIdsBooks(createMapOfIdsdata(data));
+    });
+  }, []);
 
+
+    // searching effect
     useEffect(() => {
-      console.log(searchValue)
       if(searchValue){
         BooksAPI.search(searchValue).then((data:any) => {
           if(data.error) {
@@ -52,6 +79,24 @@ const App = () => {
   
   }, [searchValue]);
 
+    // combine arrays
+    useEffect(()=>{
+      const combined = searchBooks.map((book:any)=> {
+        if(book?.id){
+          if(mapOfIdsBooks.has(book.id)){
+            return mapOfIdsBooks.get(book.id);
+          }
+          else {
+            return book;
+          }
+        }
+        
+      });
+
+      // fill combined books array state
+      setCombinedBooks(combined);
+
+    }, [searchBooks]);
   return (
     <div className="app">
       {showSearchPage ? (
@@ -74,9 +119,9 @@ const App = () => {
           </div>
           <div className="search-books-results">
             <ol className="books-grid">
-              {searchBooks?.length
-                ? searchBooks.map((book:any) => (
-                    <li key={book.id}>
+              {combinedBooks?.length
+                ? combinedBooks.map((book:any) => (
+                    <li key={book?.id}>
                       <Book book={book} changeBookType={updateBookShelf} />
                     </li>
                   ))
