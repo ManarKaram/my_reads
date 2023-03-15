@@ -1,6 +1,6 @@
 import React from "react";
 
-const Book = ({ book, changeBookType }) => {
+const Book = ({ book, changeBookType }:any) => {
   const bookDetails = book;
 
   return (
@@ -29,8 +29,8 @@ const Book = ({ book, changeBookType }) => {
           </select>
         </div>
       </div>
-      <div className="book-title">{bookDetails.title}</div>
-      <div className="book-authors">{bookDetails.authors.join(',')}</div>
+      <div className="book-title">{bookDetails?.title}</div>
+      <div className="book-authors">{bookDetails?.authors?.join(",")}</div>
     </div>
   );
 };

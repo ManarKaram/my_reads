@@ -1,13 +1,13 @@
 import React from "react";
 import Shelf from "./Shelf";
 
-const Shelves = ({ books, updateBookShelf }) => {
+const Shelves = ({ books, updateBookShelf }: any) => {
   // state of shelves
   const currentlyReading = books.filter(
-    book => book.shelf === "currentlyReading"
+    (book: any) => book.shelf === "currentlyReading"
   );
-  const wantToRead = books.filter(book => book.shelf === "wantToRead");
-  const read = books.filter(book => book.shelf === "read");
+  const wantToRead = books.filter((book: any) => book.shelf === "wantToRead");
+  const read = books.filter((book: any) => book.shelf === "read");
 
   return (
     <>
