@@ -2,13 +2,10 @@ import "./App.css";
 import * as BooksAPI from "./BooksAPI";
 import {BrowserRouter as Router, Route, Link, Routes} from 'react-router-dom';
 import React, { useState, useEffect } from "react";
-import Shelves from "./components/Shelves";
-import Book from "./components/Book";
+import Home from "./pages/Home";
+import Search from "./pages/Search";
 
 const App = () => {
-  // search
-  const [showSearchPage, setShowSearchpage] = useState(false);
-
   // original books
   const [books, setBooks] = useState([]);
 
@@ -34,14 +31,14 @@ const App = () => {
       }
       return book;
     });
+    //updating UI
+    if(!mapOfIdsBooks.has(bookToUpdate.id)) {
+      bookToUpdate.shelf = newShelf;
+      updatedBooks.push(bookToUpdate);
+    }
     setBooks(updatedBooks);
     BooksAPI.update(bookToUpdate, newShelf);
   };
-
-  // views search component
-   const handleShowSearchPage = () => {
-     setShowSearchpage(!showSearchPage);
-   };
 
 
    // creates map of ids of books
@@ -105,30 +102,11 @@ const App = () => {
         <Routes>
               {/* Search Page */}
           <Route path="/search" element={
-              <div className="search-books">
-                <div className="search-books-bar">
-                  <Link to="/"><button className="close-search">Close</button></Link>
-                  <div className="search-books-input-wrapper">
-                    <input
-                      type="text"
-                      placeholder="Search by title, author, or ISBN"
-                      value={searchValue}
-                      onChange={e => setSearchValue(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="search-books-results">
-                  <ol className="books-grid">
-                    {combinedBooks?.length
-                      ? combinedBooks.map((book:any) => (
-                          <li key={book?.id}>
-                            <Book book={book} changeBookType={updateBookShelf} />
-                          </li>
-                        ))
-                      : null}
-                  </ol>
-                </div>
-              </div>
+            <Search combinedBooks = {combinedBooks}
+                    setSearchValue ={setSearchValue}
+                    searchValue = {searchValue}
+                    updateBookShelf ={updateBookShelf}>
+            </Search>
               }>
   
           </Route>
@@ -136,17 +114,7 @@ const App = () => {
 
             {/* Home Page */}
           <Route path="/" element={ 
-              <div className="list-books">
-                <div className="list-books-title">
-                  <h1>MyReads</h1>
-                </div>
-                <div className="list-books-content">
-                  <Shelves books={books} updateBookShelf={updateBookShelf} />
-                </div>
-                <div className="open-search">
-                  <Link to="/search"><a>Add a book</a></Link>
-                </div>
-              </div>
+            <Home books={books} updateBookShelf={updateBookShelf}></Home>
             }>
           </Route>
         </Routes>
