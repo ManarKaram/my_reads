@@ -1,5 +1,6 @@
 import "./App.css";
 import * as BooksAPI from "./BooksAPI";
+import {BrowserRouter as Router, Route, Link, Routes} from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import Shelves from "./components/Shelves";
 import Book from "./components/Book";
@@ -98,51 +99,60 @@ const App = () => {
 
     }, [searchBooks]);
   return (
+    <>
     <div className="app">
-      {showSearchPage ? (
-        <div className="search-books">
-          <div className="search-books-bar">
-            <button
-              className="close-search"
-              onClick={() => {setShowSearchpage(!showSearchPage); window.location.reload()}}
-            >
-              Close
-            </button>
-            <div className="search-books-input-wrapper">
-              <input
-                type="text"
-                placeholder="Search by title, author, or ISBN"
-                value={searchValue}
-                onChange={e => setSearchValue(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="search-books-results">
-            <ol className="books-grid">
-              {combinedBooks?.length
-                ? combinedBooks.map((book:any) => (
-                    <li key={book?.id}>
-                      <Book book={book} changeBookType={updateBookShelf} />
-                    </li>
-                  ))
-                : null}
-            </ol>
-          </div>
-        </div>
-      ) : (
-        <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-          <div className="list-books-content">
-            <Shelves books={books} updateBookShelf={updateBookShelf} />
-          </div>
-          <div className="open-search">
-            <a onClick={handleShowSearchPage}>Add a book</a>
-          </div>
-        </div>
-      )}
+    <Router>
+        <Routes>
+              {/* Search Page */}
+          <Route path="/search" element={
+              <div className="search-books">
+                <div className="search-books-bar">
+                  <Link to="/"><button className="close-search">Close</button></Link>
+                  <div className="search-books-input-wrapper">
+                    <input
+                      type="text"
+                      placeholder="Search by title, author, or ISBN"
+                      value={searchValue}
+                      onChange={e => setSearchValue(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="search-books-results">
+                  <ol className="books-grid">
+                    {combinedBooks?.length
+                      ? combinedBooks.map((book:any) => (
+                          <li key={book?.id}>
+                            <Book book={book} changeBookType={updateBookShelf} />
+                          </li>
+                        ))
+                      : null}
+                  </ol>
+                </div>
+              </div>
+              }>
+  
+          </Route>
+
+
+            {/* Home Page */}
+          <Route path="/" element={ 
+              <div className="list-books">
+                <div className="list-books-title">
+                  <h1>MyReads</h1>
+                </div>
+                <div className="list-books-content">
+                  <Shelves books={books} updateBookShelf={updateBookShelf} />
+                </div>
+                <div className="open-search">
+                  <Link to="/search"><a>Add a book</a></Link>
+                </div>
+              </div>
+            }>
+          </Route>
+        </Routes>
+    </Router>
     </div>
+    </>
   );
 };
 
